@@ -9,6 +9,10 @@ import com.jf.crawl.demo.PeopleMessageHandler;
 
 import io.netty.channel.ChannelHandler;
 
+/**
+ * 启动服务端，暴露端口
+ * @author lamen 2019/8/12
+ */
 public class TestServer {
 
 	public static void main(String[] args) {

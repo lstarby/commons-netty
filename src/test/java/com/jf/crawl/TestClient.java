@@ -5,6 +5,10 @@ import com.jf.crawl.connect.DecoderType;
 import com.jf.crawl.connect.NettyClient;
 import com.jf.crawl.demo.PeopleMessage;
 
+/**
+ * 启动客户端，通过ip和端口连接
+ * @author lamen 2019/8/12
+ */
 public class TestClient {
 
 	public static void main(String[] args) throws InterruptedException {
