@@ -17,7 +17,7 @@ public class TestClient {
 		
 		for (String connectInfo : connectInfoList) {
 			String[] connect = connectInfo.split(":");
-			NettyClient.build(DecoderType.OBJECT).host(connect[0]).port(Integer.valueOf(connect[1])).open();
+			NettyClient.build(DecoderType.CUSTOM).host(connect[0]).port(Integer.valueOf(connect[1])).open();
 		}
 		
 		for (int i = 0; i < 10; i++) {

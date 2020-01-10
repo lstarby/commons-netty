@@ -20,15 +20,15 @@ import io.netty.util.ReferenceCountUtil;
 public class ObjectMessageCodec extends ByteToMessageCodec<Message> {
 
 	@Override
-	protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
+	protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) {
 		byte[] bytes = msg.toString().getBytes();
-		out.writeInt(bytes.length);
+		out.writeByte(bytes.length);
 		out.writeBytes(bytes);
 	}
 
 	@Override
-	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		int length = in.readableBytes();
+	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+		int length = in.readByte();
 		ByteBuf bodyBuffer = Unpooled.buffer(length);
 		bodyBuffer.writeBytes(in.readBytes(length));
 
@@ -38,5 +38,4 @@ public class ObjectMessageCodec extends ByteToMessageCodec<Message> {
 		ReferenceCountUtil.release(bodyBuffer);
 		out.add(message);
 	}
-	
 }

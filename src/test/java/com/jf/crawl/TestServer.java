@@ -22,7 +22,7 @@ public class TestServer {
 		
 		Integer[] ports = { 6021 };
 		for (Integer port : ports) {
-			NettyServer.build(handlerList, DecoderType.OBJECT).port(port).open();
+			NettyServer.build(handlerList, DecoderType.CUSTOM).port(port).open();
 		}
 	}
 }

@@ -39,8 +39,8 @@ public class NettyClient extends AbstractConnector {
 		bootstrap.group(EventLoopGroupFactory.INS.getWorker())
 			.channel(NioSocketChannel.class)
 			.option(ChannelOption.TCP_NODELAY, true) // 低延迟
-			.option(ChannelOption.SO_RCVBUF, 2048)   // 数据接收缓冲区大小
-			.option(ChannelOption.SO_SNDBUF, 2048)   // 数据发送缓冲区大小
+			.option(ChannelOption.SO_RCVBUF, 2048) // 数据接收缓冲区大小
+			.option(ChannelOption.SO_SNDBUF, 2048) // 数据发送缓冲区大小
 			.handler(initPipeline(decoderType));
 	}
 	
@@ -48,12 +48,9 @@ public class NettyClient extends AbstractConnector {
 	public void open() {
 		ChannelFuture future = bootstrap.connect(new InetSocketAddress(getHost(), getPort()));
 		
-		future.addListener(new ChannelFutureListener() {
-			@Override
-			public void operationComplete(ChannelFuture future) throws Exception {
-				if (future.isSuccess()) {
-					ChannelUtil.addChannel(future.channel());
-				}
+		future.addListener((ChannelFutureListener) future1 -> {
+			if (future1.isSuccess()) {
+				ChannelUtil.addChannel(future1.channel());
 			}
 		});
 		
@@ -68,12 +65,11 @@ public class NettyClient extends AbstractConnector {
 	private ChannelInitializer<Channel> initPipeline(DecoderType decoderType) {
 		return new ChannelInitializer<Channel>() {
 			@Override
-			protected void initChannel(Channel ch) throws Exception {
+			protected void initChannel(Channel ch) {
 				ChannelPipeline pipeline = ch.pipeline();
 				
 				switch (decoderType) {
-				case OBJECT:
-					pipeline.addLast(new LengthFieldBasedFrameDecoder(1024, 0, 4, 0, 4));
+				case CUSTOM:
 					pipeline.addLast(new ObjectMessageCodec());
 					break;
 				case STRING:
@@ -88,5 +84,4 @@ public class NettyClient extends AbstractConnector {
 			}
 		};
 	}
-
 }

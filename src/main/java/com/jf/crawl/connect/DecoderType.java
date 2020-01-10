@@ -9,9 +9,9 @@ package com.jf.crawl.connect;
 public enum DecoderType {
 	
 	/**
-	 * 普通对象
+	 * 自定义编解码
 	 */
-	OBJECT,
+	CUSTOM,
 	
 	/**
 	 * 字符串

@@ -20,13 +20,13 @@ public abstract class DefaultObjectHandler extends SimpleChannelInboundHandler<M
 	private static Logger logger = LoggerFactory.getLogger(DefaultObjectHandler.class);
 	
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, Message msg) throws Exception {
+	protected void channelRead0(ChannelHandlerContext ctx, Message msg) {
 		handleMessage(msg.getBodyBuffer());
 		ctx.fireChannelRead(msg);
 	}
 	
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		logger.error("exceptionCaught.", cause);
 		ctx.close();
 	}
@@ -34,5 +34,4 @@ public abstract class DefaultObjectHandler extends SimpleChannelInboundHandler<M
 	protected <T> T parseObject(byte[] msg, Class<T> c) {
 		return JSON.parseObject(msg, c);
 	}
-
 }
